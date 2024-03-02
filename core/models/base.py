@@ -1,10 +1,10 @@
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, declared_attr
 
 
 class Base(DeclarativeBase):
     __abstract__ = True
 
-    @declarative_attr.directive
+    @declared_attr.directive
     def __tablename__(cls) -> str:
         return f"{str.__name__.lower()}s"
 
