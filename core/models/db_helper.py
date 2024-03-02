@@ -20,7 +20,7 @@ class DataBaseHelper:
             bind=self.engine,
             autoflush=False,
             autocommit=False,
-            expire_on_close=False,
+            expire_on_commit=False,
         )
 
     def get_scoped_session(self):
@@ -34,6 +34,11 @@ class DataBaseHelper:
         async with self.session_factory() as session:
             yield session
             await session.close()
+
+    async def scope_session_dependency(self) -> AsyncSession:
+        session = self.get_scoped_session()
+        yield session
+        await session.close()
 
 
 db_helper = DataBaseHelper(
