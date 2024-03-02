@@ -26,14 +26,14 @@ class DataBaseHelper:
     def get_scoped_session(self):
         session = async_scoped_session(
             session_factory=self.session_factory,
-            scopfunc=current_task,
+            scopefunc=current_task,
         )
         return session
 
     async def session_dependency(self) -> AsyncSession:
-        async with self.get_scoped_session() as session:
+        async with self.session_factory() as session:
             yield session
-            session.close()
+            await session.close()
 
 
 db_helper = DataBaseHelper(
