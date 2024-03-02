@@ -6,5 +6,9 @@ class ProductBase(BaseModel):
     price: int
 
 
+class ProductCreate(ProductBase):
+    pass
+
+
 class Product(ProductBase):
     id: int
