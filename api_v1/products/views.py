@@ -38,3 +38,11 @@ async def get_product(
         status_code=status.HTTP_404_NOT_FOUND,
         detail=f"Product with id {product_id} not found",
     )
+
+
+@router.put("/{product_id}/")
+async def update_product(
+    product_id: int,
+    session: AsyncSession = Depends(db_helper.scope_session_dependency),
+) -> Product:
+    pass
