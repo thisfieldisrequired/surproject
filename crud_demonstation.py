@@ -165,7 +165,7 @@ async def get_profiles_with_users_and_users_with_posts(
         print(profile.user.posts)
 
 
-async def main():
+async def main_relations(session: AsyncSession):
     async with db_helper.session_factory() as session:
         # user_max = await create_user(session=session, username="Max")
         # await create_user(session=session, username="Sam")
@@ -185,6 +185,11 @@ async def main():
         # await get_posts_with_authors(session=session)
         # await get_users_with_posts_and_profiles(session=session)
         await get_profiles_with_users_and_users_with_posts(session=session)
+
+
+async def main():
+    async with db_helper.session_factory() as session:
+        pass
 
 
 if __name__ == "__main__":
