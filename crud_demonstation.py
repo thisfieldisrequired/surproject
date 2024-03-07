@@ -187,9 +187,13 @@ async def main_relations(session: AsyncSession):
         await get_profiles_with_users_and_users_with_posts(session=session)
 
 
+async def demo_m2m(session: AsyncSession):
+    pass
+
+
 async def main():
     async with db_helper.session_factory() as session:
-        pass
+        await demo_m2m(session)
 
 
 if __name__ == "__main__":
