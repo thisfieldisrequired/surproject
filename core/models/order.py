@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from datetime import datetime
 from typing import TYPE_CHECKING
 
@@ -6,7 +8,6 @@ from sqlalchemy import func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from core.models.base import Base
-from core.models.product import Product
 from core.models.order_product_association import order_product_association_table
 
 
