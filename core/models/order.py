@@ -1,10 +1,17 @@
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 from sqlalchemy import DateTime, String
 from sqlalchemy import func
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from core.models.base import Base
+from core.models.product import Product
+from core.models.order_product_association import order_product_association_table
+
+
+if TYPE_CHECKING:
+    from core.models.product import Product
 
 
 class Order(Base):
@@ -16,4 +23,8 @@ class Order(Base):
         DateTime,
         server_default=func.now(),
         default=datetime.now,
+    )
+    products: Mapped[list["Product"]] = relationship(
+        secondary=order_product_association_table,
+        back_populates="orders",
     )
