@@ -186,6 +186,21 @@ async def main_relations(session: AsyncSession):
         await get_profiles_with_users_and_users_with_posts(session=session)
 
 
+async def get_orders_with_products(session: AsyncSession) -> list[Order]:
+    stmt = (
+        select(Order)
+        .options(
+            selectinload(Order.products),
+        )
+        .order_by(Order.id)
+    )
+
+    orders = await session.scalars(stmt)
+    for order in orders:
+        print(f"Order - {order.id}")
+    return list(orders)
+
+
 async def create_order(
     session: AsyncSession,
     promocode: str | None = None,
@@ -207,7 +222,7 @@ async def create_product(
     return product
 
 
-async def demo_m2m(session: AsyncSession):
+async def create_products_and_orders(session: AsyncSession):
     order_one = await create_order(session)
     order_promocode = await create_order(session, promocode="promo")
     mouse = await create_product(session, name="mouse", price=100)
@@ -229,10 +244,14 @@ async def demo_m2m(session: AsyncSession):
     )
     order_one.products.append(mouse)
     order_one.products.append(keyboard)
-    order_promocode.products.append(keyboard)
-    order_promocode.products.append(display)
+    order_promocode.products = [keyboard, display]
 
     await session.commit()
+
+
+async def demo_m2m(session: AsyncSession):
+    await create_products_and_orders(session=session)
+    await get_orders_with_products(session=session)
 
 
 async def main():

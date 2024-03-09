@@ -8,8 +8,6 @@ from sqlalchemy import func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from core.models.base import Base
-from core.models.order_product_association import order_product_association_table
-
 
 if TYPE_CHECKING:
     from core.models.product import Product
@@ -26,6 +24,6 @@ class Order(Base):
         default=datetime.now,
     )
     products: Mapped[list["Product"]] = relationship(
-        secondary=order_product_association_table,
+        secondary="order_product_association",
         back_populates="orders",
     )
