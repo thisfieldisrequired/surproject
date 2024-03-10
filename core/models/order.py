@@ -11,6 +11,7 @@ from core.models.base import Base
 
 if TYPE_CHECKING:
     from core.models.product import Product
+    from core.models.order_product_association import OrderProductAssociation
 
 
 class Order(Base):
@@ -23,7 +24,10 @@ class Order(Base):
         server_default=func.now(),
         default=datetime.now,
     )
-    products: Mapped[list["Product"]] = relationship(
-        secondary="order_product_association",
-        back_populates="orders",
+    # products: Mapped[list["Product"]] = relationship(
+    #     secondary="order_product_association",
+    #     back_populates="orders",
+    # )
+    products_details: Mapped[list[OrderProductAssociation]] = relationship(
+        back_populates="order"
     )
