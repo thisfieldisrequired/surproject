@@ -250,7 +250,7 @@ async def create_products_and_orders(session: AsyncSession):
 
 
 async def demo_m2m(session: AsyncSession):
-    await create_products_and_orders(session=session)
+    # await create_products_and_orders(session=session)
     await get_orders_with_products(session=session)
 
 
